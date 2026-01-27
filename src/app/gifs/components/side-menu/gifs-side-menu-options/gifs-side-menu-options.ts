@@ -1,5 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
+interface MenuOption {
+  icon: string;
+  label: string;
+  subLabel: string;
+  route: string;
+}
+
 @Component({
   selector: 'gifs-side-menu-options',
   standalone: true,
@@ -7,4 +14,23 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './gifs-side-menu-options.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GifsSideMenuOptions { }
+export class GifsSideMenuOptions { 
+
+  menuOptions: MenuOption[] = [
+    {
+      icon: 'fa-solid fa-chart-line',
+      label: 'Trending',
+      subLabel: 'Popular gifs',
+      route: '/dashboard/trending'
+    },
+    {
+      icon: 'fa-solid fa-magnifying-glass',
+      label: 'Search',
+      subLabel: 'Search gifs',
+      route: '/dashboard/search'
+    }
+
+  ];
+
+
+}
