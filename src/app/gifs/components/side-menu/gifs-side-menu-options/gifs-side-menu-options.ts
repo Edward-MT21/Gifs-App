@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink, RouterLinkActive } from "@angular/router";
 
 interface MenuOption {
   icon: string;
@@ -10,7 +11,7 @@ interface MenuOption {
 @Component({
   selector: 'gifs-side-menu-options',
   standalone: true,
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './gifs-side-menu-options.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
