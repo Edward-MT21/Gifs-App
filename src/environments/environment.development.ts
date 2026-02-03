@@ -1,5 +1,8 @@
 export const environment = {
     title: "Gifs",
     titleTwo: "App",
-    titleDescription: "This app you can to create awesome things"
+    titleDescription: "This app you can to create awesome things",
+
+    giphyApiKey:"ko5rmjwedQsKpDhuUHzCbvMdeGNHek1D"
+
 };
