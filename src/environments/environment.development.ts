@@ -3,6 +3,7 @@ export const environment = {
     titleTwo: "App",
     titleDescription: "This app you can to create awesome things",
 
-    giphyApiKey:"ko5rmjwedQsKpDhuUHzCbvMdeGNHek1D"
+    giphyApiKey:"ko5rmjwedQsKpDhuUHzCbvMdeGNHek1D",
 
+    giphyUrl: "https://api.giphy.com/v1/"
 };
