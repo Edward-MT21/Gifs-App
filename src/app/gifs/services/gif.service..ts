@@ -20,13 +20,22 @@ const loadGifsFromLocalStorage = () => {
 export class GifService {
 
   constructor() {
-    //this.loadTrendingGifs();
+    this.loadTrendingGifs();
    }
 
   private http = inject(HttpClient)
 
   trendingGifs = signal<Gif[]>([]);
   trendingGifsLoading = signal(true);
+  trendingGifsGroup = computed<Gif[][]>(() => {
+    const groups = [];
+    for(let i=0; i<this.trendingGifs().length; i+=3){
+      groups.push(this.trendingGifs().slice(i, i+3));
+    }
+    console.log({groups});
+    return groups; // [[g1,g2,g3], [g4,g5]]
+
+  });
 
   searchHistory = signal<Record<string, Gif[]>>(loadGifsFromLocalStorage());
   searchHistoryKeys = computed(() => Object.keys(this.searchHistory()));
@@ -43,7 +52,7 @@ export class GifService {
       {
         params: {
           api_key: "ko5rmjwedQsKpDhuUHzCbvMdeGNHek1D",
-          limit: 10,
+          limit: 20,
           q: "dog"
         }
 
