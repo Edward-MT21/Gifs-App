@@ -1,6 +1,7 @@
-import { Component, ElementRef, inject, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, viewChild } from '@angular/core';
 import { GifList } from "../../components/gif-list/gif-list";
 import { GifService } from '../../services/gif.service.';
+import { ScrollStateService } from 'src/app/shared/services/scroll-state.service';
 
   const imageUrls: string[] = [
     "https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg",
@@ -24,11 +25,21 @@ import { GifService } from '../../services/gif.service.';
   imports: [GifList],
   templateUrl: './trending-page.html',
 })
-export default class TrendingPage {
+export default class TrendingPage implements AfterViewInit{
 
   gifList = imageUrls;
   gifService = inject(GifService);
   scrollDivRef = viewChild<ElementRef<HTMLDivElement>>('groupDiv');
+  scrollStateService = inject(ScrollStateService);
+
+  ngAfterViewInit(): void {
+    const scrollDiv = this.scrollDivRef()?.nativeElement;
+    if(!scrollDiv) return;
+
+    scrollDiv.scrollTop = this.scrollStateService.trendingScrollState();
+
+  }
+
 
   onScroll(event: Event) {
 
@@ -39,11 +50,15 @@ export default class TrendingPage {
     const clientHeight = scrollDiv?.clientHeight;
     const scrollHeight = scrollDiv?.scrollHeight;
 
-    console.log({scrollTop, clientHeight, scrollHeight});
-    console.log("Total", (scrollTop + clientHeight));
+    //console.log({scrollTop, clientHeight, scrollHeight});
+    //console.log("Total", (scrollTop + clientHeight));
     
     const isAtBottom = scrollTop + clientHeight + 300 >= scrollHeight;
+    this.scrollStateService.trendingScrollState.set(scrollTop);
     console.log({isAtBottom});
+    if(isAtBottom) {
+      this.gifService.loadTrendingGifs();
+    }
 
   }
 }
